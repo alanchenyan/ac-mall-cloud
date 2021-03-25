@@ -1,0 +1,6 @@
+server:
+  port: 8020
+
+spring:
+  application:
+    name: order-service
