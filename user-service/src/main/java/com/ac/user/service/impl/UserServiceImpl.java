@@ -18,6 +18,7 @@ public class UserServiceImpl implements IUserService {
     UserDao userDao;
 
     public User getUser(String id) {
+        System.out.println("获取用户信息");
         return userDao.get(id);
     }
 }
