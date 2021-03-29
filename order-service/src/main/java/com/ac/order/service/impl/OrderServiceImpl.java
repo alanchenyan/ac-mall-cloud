@@ -27,7 +27,7 @@ public class OrderServiceImpl implements IOrderService {
 
     //final static String USER_SERVICE_URL="http://127.0.0.1:8010/users/{userId}";
 
-    final static String USER_SERVICE_URL="http://user-service/users/{userId}";
+    final static String USER_SERVICE_URL="http://user-service/users/{userId}"; //用服务名来替换IP
 
     public Order makeOrder(String productId, String userId) {
 
