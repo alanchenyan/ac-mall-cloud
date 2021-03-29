@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: order-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.105.146.74:8848

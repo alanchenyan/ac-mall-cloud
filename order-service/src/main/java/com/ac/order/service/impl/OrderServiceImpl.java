@@ -25,7 +25,9 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     RestTemplate restTemplate;
 
-    final static String USER_SERVICE_URL="http://127.0.0.1:8010/users/{userId}";
+    //final static String USER_SERVICE_URL="http://127.0.0.1:8010/users/{userId}";
+
+    final static String USER_SERVICE_URL="http://user-service/users/{userId}";
 
     public Order makeOrder(String productId, String userId) {
 
