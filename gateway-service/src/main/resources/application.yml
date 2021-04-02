@@ -1,0 +1,30 @@
+server:
+  port: 7010
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.105.146.74:8848
+
+    gateway:
+      routes:                       # 路由数组[路由 就是指定当请求满足什么条件的时候转到哪个微服务]
+        - id: user-service-api          # 当前路由的标识, 要求唯一
+          uri: lb://user-service  # lb指的是从nacos中按照名称获取微服务,并遵循负载均衡策略
+          predicates:                # 断言(就是路由转发要满足的条件)
+            - Path=/users/**       # 当请求路径满足Path指定的规则时,才进行路由转发
+            #filters:                   # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+            #- StripPrefix=1           # 转发之前去掉1层路径
+
+        - id: order-service-api
+          uri: lb://order-service
+          predicates:
+            - Path=/orders/**
+
+        - id: qq_route
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
