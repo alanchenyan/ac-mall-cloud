@@ -22,8 +22,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 /**
  * @author Alan Chen
  * @description
@@ -37,6 +35,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    final static String TOKEN = "token";
 
     @Override
      public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -55,10 +55,10 @@ public class TokenFilter implements GlobalFilter, Ordered {
                  return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
         }
 
-         // 检查Redis中是否有此Token(退出登录有删除token)
+        // 检查Redis中是否有此Token(退出登录有删除token)
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
-        List<String> tokenValues = hashOperations.values(token);
-        if(tokenValues.size() == 0){
+        String redisToken = hashOperations.get("1001",TOKEN);
+        if(!token.equals(redisToken)){
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
         }
 
@@ -89,6 +89,5 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return -100;
-
     }
 }
