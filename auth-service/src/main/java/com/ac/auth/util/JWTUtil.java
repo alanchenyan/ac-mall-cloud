@@ -23,7 +23,7 @@ public class JWTUtil {
     public static final long TOKEN_EXPIRE_TIME = 7200 * 1000;
     private static final String ISSUER = "ac";
 
-    public static String generateToken(String userId,String username,String secretKey) {
+    public static String generateToken(String username, String secretKey) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         Date now = new Date();
         Date expireTime = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
@@ -32,7 +32,6 @@ public class JWTUtil {
                 .withIssuer(ISSUER)
                 .withIssuedAt(now)
                 .withExpiresAt(expireTime)
-                .withClaim("userId", userId)
                 .withClaim("username", username)
                 .sign(algorithm);
 
@@ -55,9 +54,25 @@ public class JWTUtil {
         }
     }
 
-    public static String getUserInfo(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        String username = decodedJWT.getClaim("username").asString();
-        return username;
+    public static String getUserName(String token) {
+        try{
+            DecodedJWT decodedJWT = JWT.decode(token);
+            String username = decodedJWT.getClaim("username").asString();
+            return username;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getUserId(String token) {
+        try {
+            DecodedJWT decodedJWT = JWT.decode(token);
+            String userId = decodedJWT.getClaim("userId").asString();
+            return userId;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

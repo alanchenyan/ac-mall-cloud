@@ -55,14 +55,24 @@ public class JWTUtil {
     }
 
     public static String getUserName(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        String username = decodedJWT.getClaim("username").asString();
-        return username;
+        try{
+            DecodedJWT decodedJWT = JWT.decode(token);
+            String username = decodedJWT.getClaim("username").asString();
+            return username;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+       return null;
     }
 
     public static String getUserId(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        String userId = decodedJWT.getClaim("userId").asString();
-        return userId;
+        try {
+            DecodedJWT decodedJWT = JWT.decode(token);
+            String userId = decodedJWT.getClaim("userId").asString();
+            return userId;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

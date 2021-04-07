@@ -50,15 +50,19 @@ public class TokenFilter implements GlobalFilter, Ordered {
         }
 
         String token = serverHttpRequest.getHeaders().getFirst("Authorization");
-        //String userId = serverHttpRequest.getHeaders().getFirst("userId");
         if (StringUtils.isBlank(token)) {
             serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
         }
 
+        String userId = JWTUtil.getUserId(token);
+        if(userId == null){
+            return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
+        }
+
         // 检查Redis中是否有此Token(退出登录有删除token)
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
-        String redisToken = hashOperations.get("1001", TOKEN);
+        String redisToken = hashOperations.get(userId, TOKEN);
         if (!token.equals(redisToken)) {
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
         }
@@ -71,9 +75,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.UNKNOWN_ERROR);
         }
 
-        String userId = JWTUtil.getUserId(token);
-
-        String userName = JWTUtil.getUserName(token);
 
         ServerHttpRequest mutableReq = serverHttpRequest.mutate().header("userId", userId).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
