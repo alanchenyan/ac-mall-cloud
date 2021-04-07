@@ -7,11 +7,11 @@ package com.ac.gateway.response;
  */
 public class TokenAuthenticationException extends RuntimeException {
 
-    public TokenAuthenticationException(){
+    public TokenAuthenticationException() {
         super();
     }
 
-    public TokenAuthenticationException(int code,String message){
-       super(code+message);
+    public TokenAuthenticationException(int code, String message) {
+        super(code + message);
     }
 }

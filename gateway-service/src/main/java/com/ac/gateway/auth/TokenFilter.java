@@ -39,51 +39,51 @@ public class TokenFilter implements GlobalFilter, Ordered {
     final static String TOKEN = "token";
 
     @Override
-     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-         ServerHttpRequest serverHttpRequest = exchange.getRequest();
-         ServerHttpResponse serverHttpResponse = exchange.getResponse();
-         String uri = serverHttpRequest.getURI().getPath();
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest serverHttpRequest = exchange.getRequest();
+        ServerHttpResponse serverHttpResponse = exchange.getResponse();
+        String uri = serverHttpRequest.getURI().getPath();
 
-         //  检查白名单（配置）
-         if (uri.indexOf("/auth/login") >= 0) {
-                 return chain.filter(exchange);
-            }
+        //  检查白名单（配置）
+        if (uri.indexOf("/auth/login") >= 0) {
+            return chain.filter(exchange);
+        }
 
-         String token = serverHttpRequest.getHeaders().getFirst("Authorization");
+        String token = serverHttpRequest.getHeaders().getFirst("Authorization");
         if (StringUtils.isBlank(token)) {
-                 serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
-                 return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
+            serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
+            return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
         }
 
         // 检查Redis中是否有此Token(退出登录有删除token)
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
-        String redisToken = hashOperations.get("1001",TOKEN);
-        if(!token.equals(redisToken)){
+        String redisToken = hashOperations.get("1001", TOKEN);
+        if (!token.equals(redisToken)) {
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
         }
 
         try {
             JWTUtil.verifyToken(token, secretKey);
-            } catch (TokenAuthenticationException ex) {
-                 return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
-            } catch (Exception ex) {
-                 return getVoidMono(serverHttpResponse, ResponseCodeEnum.UNKNOWN_ERROR);
-             }
+        } catch (TokenAuthenticationException ex) {
+            return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
+        } catch (Exception ex) {
+            return getVoidMono(serverHttpResponse, ResponseCodeEnum.UNKNOWN_ERROR);
+        }
 
-         String userId = JWTUtil.getUserInfo(token);
+        String userId = JWTUtil.getUserInfo(token);
 
-         ServerHttpRequest mutableReq = serverHttpRequest.mutate().header("userId", userId).build();
-         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
+        ServerHttpRequest mutableReq = serverHttpRequest.mutate().header("userId", userId).build();
+        ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
 
         return chain.filter(mutableExchange);
 
     }
 
     private Mono<Void> getVoidMono(ServerHttpResponse serverHttpResponse, ResponseCodeEnum responseCodeEnum) {
-         serverHttpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-         ResponseResult responseResult = ResponseResult.error(responseCodeEnum.getCode(), responseCodeEnum.getMessage());
-         DataBuffer dataBuffer = serverHttpResponse.bufferFactory().wrap(JSON.toJSONString(responseResult).getBytes());
-         return serverHttpResponse.writeWith(Flux.just(dataBuffer));
+        serverHttpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        ResponseResult responseResult = ResponseResult.error(responseCodeEnum.getCode(), responseCodeEnum.getMessage());
+        DataBuffer dataBuffer = serverHttpResponse.bufferFactory().wrap(JSON.toJSONString(responseResult).getBytes());
+        return serverHttpResponse.writeWith(Flux.just(dataBuffer));
     }
 
     @Override
