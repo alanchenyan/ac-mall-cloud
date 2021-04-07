@@ -5,6 +5,19 @@ spring:
   application:
     name: gateway-service
 
+  redis:
+    database: 0
+    host: 39.108.250.186
+    port: 6379
+    password: JinXin@666
+    jedis:
+      pool:
+        max-active: 500  #连接池的最大数据库连接数。设为0表示无限制
+        max-idle: 20   #最大空闲数
+        max-wait: -1
+        min-idle: 5
+    timeout: 1000
+
   cloud:
     nacos:
       discovery:

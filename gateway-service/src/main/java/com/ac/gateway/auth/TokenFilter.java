@@ -6,11 +6,14 @@ import com.ac.gateway.response.TokenAuthenticationException;
 import com.ac.gateway.util.JWTUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * @author Alan Chen
@@ -30,7 +35,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Value("${secretKey:123456}")
     private String secretKey;
 
-    private static final String ISSUER = "cheng";
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
      public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -47,9 +53,14 @@ public class TokenFilter implements GlobalFilter, Ordered {
         if (StringUtils.isBlank(token)) {
                  serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
                  return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
-             }
+        }
 
-         //todo 检查Redis中是否有此Token
+         // 检查Redis中是否有此Token(退出登录有删除token)
+        HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
+        List<String> tokenValues = hashOperations.values(token);
+        if(tokenValues.size() == 0){
+            return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_INVALID);
+        }
 
         try {
             JWTUtil.verifyToken(token, secretKey);
