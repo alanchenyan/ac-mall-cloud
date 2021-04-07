@@ -21,7 +21,7 @@ import java.util.Date;
 public class JWTUtil {
 
     public static final long TOKEN_EXPIRE_TIME = 7200 * 1000;
-    private static final String ISSUER = "cheng";
+    private static final String ISSUER = "ac";
 
      public static String generateToken(String username, String secretKey) {
          Algorithm algorithm = Algorithm.HMAC256(secretKey);
