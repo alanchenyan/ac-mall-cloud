@@ -50,6 +50,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         }
 
         String token = serverHttpRequest.getHeaders().getFirst("Authorization");
+        //String userId = serverHttpRequest.getHeaders().getFirst("userId");
         if (StringUtils.isBlank(token)) {
             serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.TOKEN_MISSION);
@@ -70,7 +71,9 @@ public class TokenFilter implements GlobalFilter, Ordered {
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.UNKNOWN_ERROR);
         }
 
-        String userId = JWTUtil.getUserInfo(token);
+        String userId = JWTUtil.getUserId(token);
+
+        String userName = JWTUtil.getUserName(token);
 
         ServerHttpRequest mutableReq = serverHttpRequest.mutate().header("userId", userId).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();

@@ -49,7 +49,7 @@ public class LoginController {
         String userId = "1001";
         if ("alanchen".equals(username) && "admin".equals(password)) {
             //  生成Token
-            String token = JWTUtil.generateToken(userId, secretKey);
+            String token = JWTUtil.generateToken(userId,username,secretKey);
 
             //  生成刷新Token
             String refreshToken = UUID.randomUUID().toString().replace("-", "");
@@ -65,7 +65,8 @@ public class LoginController {
             LoginResponse loginResponse = new LoginResponse();
             loginResponse.setToken(token);
             loginResponse.setRefreshToken(refreshToken);
-            loginResponse.setUsername(userId);
+            loginResponse.setUserId(userId);
+            loginResponse.setUsername(username);
 
             return ResponseResult.success(loginResponse);
         }
@@ -84,6 +85,8 @@ public class LoginController {
     @PostMapping("/refreshToken")
     public ResponseResult refreshToken(@RequestBody @Validated RefreshRequest request, BindingResult bindingResult) {
         String userId = request.getUserId();
+        //通过userId去数据库查到userName
+        String userName="alanchen";
         String refreshToken = request.getRefreshToken();
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         String key = userId;
@@ -93,7 +96,7 @@ public class LoginController {
         }
 
         //  生成新token
-        String newToken = JWTUtil.generateToken(userId, secretKey);
+        String newToken = JWTUtil.generateToken(userId,userName,secretKey);
         hashOperations.put(key, TOKEN, newToken);
         stringRedisTemplate.expire(userId, JWTUtil.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
 
