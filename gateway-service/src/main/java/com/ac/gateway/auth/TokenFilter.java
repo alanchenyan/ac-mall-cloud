@@ -75,7 +75,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
             return getVoidMono(serverHttpResponse, ResponseCodeEnum.UNKNOWN_ERROR);
         }
 
-
         ServerHttpRequest mutableReq = serverHttpRequest.mutate().header("userId", userId).build();
         ServerWebExchange mutableExchange = exchange.mutate().request(mutableReq).build();
 
