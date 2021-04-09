@@ -37,6 +37,11 @@ spring:
           predicates:
             - Path=/orders/**
 
+        - id: auth-service-api
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
         - id: qq_route
           uri: https://www.qq.com
           predicates:
