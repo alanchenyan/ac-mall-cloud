@@ -1,0 +1,15 @@
+server:
+  port: 8030
+
+spring:
+  application:
+    name: product-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.105.146.74:8848
+
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8888

@@ -3,6 +3,7 @@ package com.ac.order.service.impl;
 import com.ac.order.dao.OrderDao;
 import com.ac.order.dto.UserDto;
 import com.ac.order.entity.Order;
+import com.ac.order.feign.ProductServiceClient;
 import com.ac.order.feign.UserServiceClient;
 import com.ac.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     UserServiceClient userServiceClient;
+
+    @Autowired
+    ProductServiceClient productServiceClient;
 
     //final static String USER_SERVICE_URL="http://127.0.0.1:8010/users/{userId}";
 
@@ -63,6 +67,9 @@ public class OrderServiceImpl implements IOrderService {
 
         // 3、保存数据库
         orderDao.insert(order);
+
+        // 4、更新产品销量
+        productServiceClient.updateSales(productId);
 
         return order;
     }
