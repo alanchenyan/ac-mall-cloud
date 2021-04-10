@@ -13,3 +13,8 @@ spring:
     sentinel:
       transport:
         dashboard: 127.0.0.1:8888
+
+feign:
+  sentinel:
+    #为feign整合Sentinel
+    enabled: true
