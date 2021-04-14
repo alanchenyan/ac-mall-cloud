@@ -26,6 +26,6 @@ public interface ProductServiceClient {
      * @param productId
      * @param subCount
      */
-    @PutMapping("/sub_stock/{productId}/{subCount}")
+    @PutMapping(ModulePrePath.API+"/products/sub_stock/{productId}/{subCount}")
     void subStock(@PathVariable("productId") int productId,@PathVariable("subCount") int subCount);
 }
