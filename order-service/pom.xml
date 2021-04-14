@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ac</groupId>
-    <artifactId>productOrder-service</artifactId>
+    <artifactId>order-service</artifactId>
 
     <dependencies>
         <dependency>
