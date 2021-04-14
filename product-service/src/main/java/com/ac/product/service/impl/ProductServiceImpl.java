@@ -28,5 +28,9 @@ public class ProductServiceImpl implements IProductService {
         Product product = productDao.selectById(productId);
         int newStock = product.getStock()-subCount;
         product.setStock(newStock);
+
+        productDao.updateById(product);
+
+        System.out.println("下单扣减库存成功!");
     }
 }

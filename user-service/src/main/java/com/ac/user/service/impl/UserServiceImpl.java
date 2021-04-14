@@ -35,6 +35,8 @@ public class UserServiceImpl implements IUserService {
         user.setBalance(newBalance);
 
         userDao.updateById(user);
+
+        System.out.println("下单扣减余额成功!");
     }
 
 
