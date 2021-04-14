@@ -19,5 +19,13 @@ public interface ProductServiceClient {
      * @param productId
      */
     @PutMapping(ModulePrePath.API+"/products/{productId}")
-    void updateSales(@PathVariable("productId") String productId);
+    void updateSales(@PathVariable("productId") int productId);
+
+    /**
+     * 下单扣减库存
+     * @param productId
+     * @param subCount
+     */
+    @PutMapping("/sub_stock/{productId}/{subCount}")
+    void subStock(@PathVariable("productId") int productId,@PathVariable("subCount") int subCount);
 }

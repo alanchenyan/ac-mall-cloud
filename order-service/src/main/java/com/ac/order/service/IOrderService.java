@@ -1,6 +1,6 @@
 package com.ac.order.service;
 
-import com.ac.order.entity.Order;
+import com.ac.order.entity.ProductOrder;
 
 /**
  * @author Alan Chen
@@ -14,5 +14,5 @@ public interface IOrderService {
      * @param productId
      * @param userId
      */
-    Order makeOrder(String productId, String userId);
+    ProductOrder makeOrder(int productId, int userId);
 }

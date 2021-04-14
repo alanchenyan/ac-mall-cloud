@@ -2,16 +2,14 @@ package com.ac.order.service.impl;
 
 import com.ac.order.dao.OrderDao;
 import com.ac.order.dto.UserDto;
-import com.ac.order.entity.Order;
+import com.ac.order.entity.ProductOrder;
 import com.ac.order.feign.ProductServiceClient;
 import com.ac.order.feign.UserServiceClient;
 import com.ac.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author Alan Chen
@@ -37,7 +35,9 @@ public class OrderServiceImpl implements IOrderService {
 
     final static String USER_SERVICE_URL="http://user-service/users/{userId}"; //用服务名来替换IP
 
-    public Order makeOrder(String productId, String userId) {
+
+    @Transactional(rollbackFor = Exception.class)
+    public ProductOrder makeOrder(int productId, int userId) {
 
         /**
          * RestTemplate是java创造出来的，在java能够访问到网络资源的包是java.net.URLConnenction/Socket
@@ -55,22 +55,27 @@ public class OrderServiceImpl implements IOrderService {
 
         String userName=userDto.getUserName();
 
+        double amount = 100;
+
         // 2、生成订单
-        Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        order.setCreateTime(new Date());
-        order.setPriceFen(1600L);
-        order.setUserId(userId);
-        order.setUserName(userName);
-        order.setProductId(productId);
-        order.setOrderNo(UUID.randomUUID().toString());
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setAmount(amount);
+        productOrder.setUserId(userId);
+        productOrder.setUserName(userName);
+        productOrder.setProductId(productId);
 
         // 3、保存数据库
-        orderDao.insert(order);
+        orderDao.insert(productOrder);
 
         // 4、更新产品销量
         productServiceClient.updateSales(productId);
 
-        return order;
+        // 5、下单减库存
+        productServiceClient.subStock(productId,1);
+
+        // 6、下单扣减用户余额
+        userServiceClient.deductionBalance(userId,amount);
+
+        return productOrder;
     }
 }

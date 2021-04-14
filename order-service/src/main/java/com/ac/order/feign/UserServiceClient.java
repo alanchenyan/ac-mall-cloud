@@ -5,6 +5,7 @@ import com.ac.order.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 /**
  * @author Alan Chen
@@ -20,5 +21,13 @@ public interface UserServiceClient {
      * @return
      */
     @GetMapping(ModulePrePath.API+"/users/{userId}")
-    UserDto getUser(@PathVariable("userId") String userId);
+    UserDto getUser(@PathVariable("userId") int userId);
+
+    /**
+     * 下单扣减余额
+     * @param userId
+     * @param amount
+     */
+    @PutMapping(ModulePrePath.API+"/deduction_balance/{userId}/{amount}")
+    void deductionBalance(@PathVariable("userId") int userId,@PathVariable("amount") double amount);
 }

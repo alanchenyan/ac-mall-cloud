@@ -15,8 +15,12 @@ public class ProductFeignClientFallbackFactory implements FallbackFactory<Produc
     public ProductServiceClient create(Throwable throwable) {
 
         return new ProductServiceClient() {
-            public void updateSales(String productId) {
+            public void updateSales(int productId) {
                 System.out.println("调用产品更新销量接口失败，记录日志(记录到数据库或消息中间件)，产品："+productId+"需要更新销量");
+            }
+
+            public void subStock(int productId, int subCount) {
+                System.out.println("调用产品更新库存接口失败，记录日志(记录到数据库或消息中间件)，产品："+productId+"需要减库存"+subCount);
             }
         };
     }

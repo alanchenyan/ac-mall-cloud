@@ -15,4 +15,11 @@ public interface IUserService {
      * @return
      */
     User getUser(String id);
+
+    /**
+     * 下单扣减余额
+     * @param userId
+     * @param amount
+     */
+    void deductionBalance(int userId,double amount);
 }

@@ -13,3 +13,13 @@ spring:
     sentinel:
       transport:
         dashboard: 127.0.0.1:8888
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.105.146.74:3306/ac_mall_cloud_product_service_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone =GMT%2B8
+    username: product_service_u
+    password: product_service_PWD_123
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

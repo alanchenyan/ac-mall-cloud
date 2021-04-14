@@ -1,4 +1,4 @@
-package com.ac.user.entity;
+package com.ac.order.entity;
 
 import lombok.Data;
 
@@ -8,11 +8,15 @@ import lombok.Data;
  * @date 2020/10/15
  */
 @Data
-public class User {
+public class ProductOrder {
 
     private int id;
 
+    private double amount;
+
+    private int userId;
+
     private String userName;
 
-    private double balance;
+    private int productId;
 }

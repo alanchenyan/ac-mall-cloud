@@ -1,6 +1,6 @@
 package com.ac.order.controller;
 
-import com.ac.order.entity.Order;
+import com.ac.order.entity.ProductOrder;
 import com.ac.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class OrderController {
     IOrderService orderService;
 
     @GetMapping("/{productId}/{userId}")
-    public Order saveOrder(@PathVariable String productId, @PathVariable String userId){
+    public ProductOrder saveOrder(@PathVariable int productId, @PathVariable int userId){
         return orderService.makeOrder(productId,userId);
     }
 }

@@ -1,6 +1,8 @@
 package com.ac.user.dao;
 
 import com.ac.user.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,16 +11,7 @@ import org.springframework.stereotype.Repository;
  * @date 2020/10/15
  */
 @Repository
-public class UserDao {
+@Mapper
+public interface UserDao extends BaseMapper<User> {
 
-    public User get(String id){
-        if("1".equals(id)){
-            User user = new User();
-            user.setId("1");
-            user.setUserName("AC");
-
-            return user;
-        }
-       return null;
-    }
 }

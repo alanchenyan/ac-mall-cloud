@@ -4,10 +4,7 @@ import com.ac.user.constant.ModulePrePath;
 import com.ac.user.entity.User;
 import com.ac.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Alan Chen
@@ -21,8 +18,23 @@ public class UserApi {
     @Autowired
     IUserService userService;
 
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
     @GetMapping("/{userId}")
     public User getUser(@PathVariable String userId){
         return userService.getUser(userId);
+    }
+
+    /**
+     * 下单扣减余额
+     * @param userId
+     * @param amount
+     */
+    @PutMapping("/deduction_balance/{userId}/{amount}")
+    void deductionBalance(@PathVariable int userId,@PathVariable double amount){
+        userService.deductionBalance(userId,amount);
     }
 }
