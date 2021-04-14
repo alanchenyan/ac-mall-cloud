@@ -38,6 +38,4 @@ public class UserServiceImpl implements IUserService {
 
         System.out.println("下单扣减余额成功!");
     }
-
-
 }
