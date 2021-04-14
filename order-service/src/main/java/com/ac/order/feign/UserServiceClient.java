@@ -28,6 +28,6 @@ public interface UserServiceClient {
      * @param userId
      * @param amount
      */
-    @PutMapping(ModulePrePath.API+"/deduction_balance/{userId}/{amount}")
+    @PutMapping(ModulePrePath.API+"/users/deduction_balance/{userId}/{amount}")
     void deductionBalance(@PathVariable("userId") int userId,@PathVariable("amount") double amount);
 }
