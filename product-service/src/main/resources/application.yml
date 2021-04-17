@@ -26,7 +26,7 @@ mybatis-plus:
 
 seata:
   enabled: true
-  application-id: order-service
+  application-id: product-service
   tx-service-group: my_test_tx_group
   enable-auto-data-source-proxy: true    #开启数据库代理
   config:

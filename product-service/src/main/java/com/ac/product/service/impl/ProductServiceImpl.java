@@ -3,6 +3,7 @@ package com.ac.product.service.impl;
 import com.ac.product.dao.ProductDao;
 import com.ac.product.entiy.Product;
 import com.ac.product.service.IProductService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,8 @@ public class ProductServiceImpl implements IProductService {
      * @param productId
      * @param subCount
      */
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
+    //@Transactional(rollbackFor = Exception.class)
     public void subStock(int productId, int subCount) {
         Product product = productDao.selectById(productId);
         int newStock = product.getStock()-subCount;

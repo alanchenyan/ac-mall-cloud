@@ -3,6 +3,7 @@ package com.ac.user.service.impl;
 import com.ac.user.dao.UserDao;
 import com.ac.user.entity.User;
 import com.ac.user.service.IUserService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,8 @@ public class UserServiceImpl implements IUserService {
      * @param userId
      * @param amount
      */
-    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
+   // @Transactional(rollbackFor = Exception.class)
     public void deductionBalance(int userId, double amount) {
         User user = userDao.selectById(userId);
         double newBalance=user.getBalance()-amount;

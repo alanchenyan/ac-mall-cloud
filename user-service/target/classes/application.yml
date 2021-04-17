@@ -45,3 +45,9 @@ seata:
       namespace: public
       username: nacos
       password: nacos
+
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
