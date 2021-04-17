@@ -52,7 +52,8 @@ ribbon:
 seata:
   enabled: true
   application-id: order-service
-  txServiceGroup: my_test_tx_group    #此处配置自定义的seata事务分组名称
+  tx-service-group: my_test_tx_group
+  # txServiceGroup: my_test_tx_group    #此处配置自定义的seata事务分组名称
   enable-auto-data-source-proxy: true    #开启数据库代理
   config:
     type: nacos
@@ -70,3 +71,9 @@ seata:
       namespace: public
       username: nacos
       password: nacos
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+
