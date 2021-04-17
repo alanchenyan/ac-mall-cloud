@@ -14,10 +14,6 @@ spring:
       transport:
         dashboard: 127.0.0.1:8888
 
-    alibaba:
-      seata:
-        tx-service-group: sunrise_tx_group
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.105.146.74:3306/ac_mall_cloud_product_service_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone =GMT%2B8
@@ -27,3 +23,25 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+seata:
+  enabled: true
+  application-id: order-service
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true    #开启数据库代理
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      server-addr: 47.105.146.74:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 47.105.146.74:8848
+      namespace: public
+      username: nacos
+      password: nacos
