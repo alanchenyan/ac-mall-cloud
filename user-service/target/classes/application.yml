@@ -12,7 +12,7 @@ spring:
 
     alibaba:
       seata:
-        tx-service-group: default
+        tx-service-group: sunrise_tx_group
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

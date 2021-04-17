@@ -6,6 +6,7 @@ import com.ac.order.entity.ProductOrder;
 import com.ac.order.feign.ProductServiceClient;
 import com.ac.order.feign.UserServiceClient;
 import com.ac.order.service.IOrderService;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements IOrderService {
     final static String USER_SERVICE_URL="http://user-service/users/{userId}"; //用服务名来替换IP
 
 
-    // @GlobalTransactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public ProductOrder makeOrder(int productId, int userId) {
 
