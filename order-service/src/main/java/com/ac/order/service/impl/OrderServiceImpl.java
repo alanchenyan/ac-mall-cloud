@@ -38,7 +38,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
     @GlobalTransactional(rollbackFor = Exception.class)
-    @Transactional(rollbackFor = Exception.class)
+    // @Transactional(rollbackFor = Exception.class)
     public ProductOrder makeOrder(int productId, int userId) {
 
         /**
