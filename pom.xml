@@ -57,6 +57,24 @@
 
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <version>${alibaba.cloud.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>seata-all</artifactId>
+                        <groupId>io.seata</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-all</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${alibaba.cloud.version}</version>
             </dependency>
@@ -96,6 +114,22 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>seata-all</artifactId>
+                        <groupId>io.seata</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-all</artifactId>
             </dependency>
 
         </dependencies>

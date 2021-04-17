@@ -31,6 +31,9 @@ public class ProductServiceImpl implements IProductService {
 
         productDao.updateById(product);
 
+        //制造异常测试回滚
+        int a = 1/0;
+
         System.out.println("下单扣减库存成功!");
     }
 }

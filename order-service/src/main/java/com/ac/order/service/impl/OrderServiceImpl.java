@@ -36,6 +36,7 @@ public class OrderServiceImpl implements IOrderService {
     final static String USER_SERVICE_URL="http://user-service/users/{userId}"; //用服务名来替换IP
 
 
+    // @GlobalTransactional(rollbackFor = Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public ProductOrder makeOrder(int productId, int userId) {
 

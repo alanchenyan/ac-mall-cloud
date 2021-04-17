@@ -14,6 +14,10 @@ spring:
       transport:
         dashboard: 127.0.0.1:8888
 
+    alibaba:
+      seata:
+        tx-service-group: default
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.105.146.74:3306/ac_mall_cloud_order_service_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone =GMT%2B8
@@ -35,3 +39,12 @@ ribbon:
   ReadTimeout: 25000
   #指的是建立连接后从服务器读取到可用资源所用的时间
   ConnectTimeout: 25000
+
+#seata:
+#  client:
+#    support:
+#      spring:
+#        datasource-autoproxy: true
+#  tx-service-group: order
+#  service:
+#    grouplist: 127.0.0.1:8091
