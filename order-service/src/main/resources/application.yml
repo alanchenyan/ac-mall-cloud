@@ -14,9 +14,9 @@ spring:
       transport:
         dashboard: 127.0.0.1:8888
 
-    alibaba:
-      seata:
-        tx-service-group: sunrise_tx_group
+#    alibaba:
+#      seata:
+#        tx-service-group: sunrise_tx_group
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -48,3 +48,25 @@ ribbon:
 #  tx-service-group: order
 #  service:
 #    grouplist: 127.0.0.1:8091
+
+seata:
+  enabled: true
+  application-id: order-service
+  txServiceGroup: my_test_tx_group    #此处配置自定义的seata事务分组名称
+  enable-auto-data-source-proxy: true    #开启数据库代理
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      server-addr: 47.105.146.74:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 47.105.146.74:8848
+      namespace: public
+      username: nacos
+      password: nacos
