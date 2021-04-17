@@ -19,12 +19,12 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <mysql.version>8.0.17</mysql.version>
         <mybatis.plus.version>3.2.0</mybatis.plus.version>
         <druid.version>1.1.10</druid.version>
-        <boot.version>2.2.4.RELEASE</boot.version>
-        <alibaba.cloud.version>2.1.0.RELEASE</alibaba.cloud.version>
+        <boot.version>2.3.2.RELEASE</boot.version>
+        <alibaba.cloud.version>2.2.5.RELEASE</alibaba.cloud.version>
         <lombok.version>1.18.10</lombok.version>
     </properties>
 
@@ -55,23 +55,23 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-                <version>${alibaba.cloud.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>seata-all</artifactId>
-                        <groupId>io.seata</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
+<!--                <version>${alibaba.cloud.version}</version>-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <artifactId>seata-all</artifactId>-->
+<!--                        <groupId>io.seata</groupId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
 
-            <dependency>
-                <groupId>io.seata</groupId>
-                <artifactId>seata-all</artifactId>
-                <version>1.1.0</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.seata</groupId>-->
+<!--                <artifactId>seata-all</artifactId>-->
+<!--                <version>1.1.0</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
