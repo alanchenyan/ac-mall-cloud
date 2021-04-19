@@ -6,6 +6,7 @@ import com.ac.order.entity.ProductOrder;
 import com.ac.order.feign.ProductServiceClient;
 import com.ac.order.feign.UserServiceClient;
 import com.ac.order.service.IOrderService;
+import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,8 @@ public class OrderServiceImpl implements IOrderService {
     @GlobalTransactional(rollbackFor = Exception.class)
     // @Transactional(rollbackFor = Exception.class)
     public ProductOrder makeOrder(int productId, int userId) {
+
+        System.out.println("开始分支事务，XID = " + RootContext.getXID());
 
         /**
          * RestTemplate是java创造出来的，在java能够访问到网络资源的包是java.net.URLConnenction/Socket
