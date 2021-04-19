@@ -73,7 +73,7 @@ public class OrderServiceImpl implements IOrderService {
         orderDao.insert(productOrder);
 
         // 4、更新产品销量
-        productServiceClient.updateSales(productId);
+       // productServiceClient.updateSales(productId);
 
         // 5、下单减库存
         productServiceClient.subStock(productId,1);
