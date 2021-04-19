@@ -50,7 +50,7 @@ ribbon:
 
 seata:
   enabled: true
-  application-id: order-service
+  application-id: order-service # 同spring.application.name 配置的项目名称
   tx-service-group: my_test_tx_group
   enable-auto-data-source-proxy: true    #开启数据库代理
   config:
