@@ -4,7 +4,6 @@ import com.ac.product.dao.ProductDao;
 import com.ac.product.entiy.Product;
 import com.ac.product.service.IProductService;
 import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +24,6 @@ public class ProductServiceImpl implements IProductService {
      * @param productId
      * @param subCount
      */
-   // @GlobalTransactional(rollbackFor = Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public void subStock(int productId, int subCount) {
         System.out.println("开始分支事务，XID = " + RootContext.getXID());

@@ -39,7 +39,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
     @GlobalTransactional(rollbackFor = Exception.class)
-    // @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public ProductOrder makeOrder(int productId, int userId) {
 
         System.out.println("开始分支事务，XID = " + RootContext.getXID());

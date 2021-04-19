@@ -1,7 +1,7 @@
 package com.ac.order.feign;
 
 import com.ac.order.constant.ModulePrePath;
-import com.ac.order.fallback.ProductFeignClientFallbackFactory;
+//import com.ac.order.fallback.ProductFeignClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
  * @description 产品接口
  * @date 2021/4/10
  */
-@FeignClient(name="product-service",fallbackFactory = ProductFeignClientFallbackFactory.class)
+@FeignClient(name="product-service")
+//@FeignClient(name="product-service",fallbackFactory = ProductFeignClientFallbackFactory.class)
 public interface ProductServiceClient {
 
     /**
