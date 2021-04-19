@@ -30,8 +30,8 @@ public class UserServiceImpl implements IUserService {
      * @param userId
      * @param amount
      */
-    @GlobalTransactional(rollbackFor = Exception.class)
-   // @Transactional(rollbackFor = Exception.class)
+   // @GlobalTransactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void deductionBalance(int userId, double amount) {
         System.out.println("开始分支事务，XID = " + RootContext.getXID());
 

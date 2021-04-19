@@ -25,8 +25,8 @@ public class ProductServiceImpl implements IProductService {
      * @param productId
      * @param subCount
      */
-    @GlobalTransactional(rollbackFor = Exception.class)
-    //@Transactional(rollbackFor = Exception.class)
+   // @GlobalTransactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public void subStock(int productId, int subCount) {
         System.out.println("开始分支事务，XID = " + RootContext.getXID());
 
